@@ -11,8 +11,15 @@
     <h1>
         <%= kindOfDay %>
     </h1>
+    <ul>
+        <% if (itemEl) { %>
+            <li>
+                <%= itemEl %>
+            </li>
+            <% } %>
+    </ul>
     <form action="/" method="post">
-        <input type="text">
+        <input type="text" name="newItemInput" id="newItemInput">
         <button type="submit">Add item</button>
     </form>
 </body>

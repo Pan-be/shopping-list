@@ -9,18 +9,29 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
+
+let itemsArr = []
+
+const today = new Date()
+
+let day = ""
+
 app.set("view engine", "ejs")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => {
-	const today = new Date()
-
-	let day = ""
-
 	day = today.toLocaleString("eng", { weekday: "long" })
 
-	res.render("index", { kindOfDay: day })
+	res.render("index", { kindOfDay: day, itemEl: [] })
+})
+
+app.post("/", (req, res) => {
+	const newItem = [req.body.newItemInput]
+	itemsArr = [...newItem]
+	itemsArr.map((item) => {
+		res.render("index", { kindOfDay: day, itemEl: item })
+	})
 })
 
 app.listen(port, () => console.log(`server run on port::${port}`))
