@@ -12,11 +12,13 @@
         <%= kindOfDay %>
     </h1>
     <ul>
-        <% if (itemEl) { %>
-            <li>
-                <%= itemEl %>
-            </li>
-            <% } %>
+        <% if (itemEls) { %>
+            <% itemEls.map(item=> { %>
+                <li>
+                    <%= item %>
+                </li>
+                <% }) %>
+                    <% } %>
     </ul>
     <form action="/" method="post">
         <input type="text" name="newItemInput" id="newItemInput">

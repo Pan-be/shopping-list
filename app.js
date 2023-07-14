@@ -23,15 +23,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
 	day = today.toLocaleString("eng", { weekday: "long" })
 
-	res.render("index", { kindOfDay: day, itemEl: [] })
+	res.render("index", { kindOfDay: day, itemEls: itemsArr })
 })
 
 app.post("/", (req, res) => {
 	const newItem = [req.body.newItemInput]
-	itemsArr = [...newItem]
-	itemsArr.map((item) => {
-		res.render("index", { kindOfDay: day, itemEl: item })
-	})
+	itemsArr.push(newItem)
+	res.redirect('/')
 })
 
 app.listen(port, () => console.log(`server run on port::${port}`))
