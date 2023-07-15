@@ -15,6 +15,8 @@ let foodItems = []
 
 const today = new Date()
 
+let year = today.getFullYear()
+
 let day = ""
 const options = {
 	weekday: "long",
@@ -31,7 +33,11 @@ app.use(express.static("public"))
 app.get("/", (req, res) => {
 	day = today.toLocaleString("eng", options)
 
-	res.render("index", { listTitle: day, itemEls: itemsArr })
+	res.render("index", {
+		listTitle: day,
+		itemEls: itemsArr,
+		year: year,
+	})
 })
 
 app.post("/", (req, res) => {
@@ -56,6 +62,10 @@ app.post("/food", (req, res) => {
 	const newFood = [req.body.newItemsInput]
 	foodItems = [...foodItems, newFood]
 	res.redirect("/food")
+})
+
+app.get("/about", (req, res) => {
+	res.render("about", { year: year })
 })
 
 app.listen(port, () => {
