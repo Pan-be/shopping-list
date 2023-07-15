@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
 	const newItem = [req.body.newItemInput]
-	if (req.body.list === "food") {
+	if (req.body.list === "Food") {
 		foodItems = [...foodItems, newItem]
 		res.redirect("/food")
 	} else {
