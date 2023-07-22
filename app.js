@@ -3,15 +3,13 @@ import bodyParser from "body-parser"
 import https from "https"
 import path from "path"
 import { fileURLToPath } from "url"
+import mongoose from "mongoose"
 
 const port = 3000
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
-
-let itemsArr = []
-let foodItems = []
 
 const today = new Date()
 
@@ -29,6 +27,8 @@ app.set("view engine", "ejs")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"))
+
+mongoose.connect('mongodb://localhost:27017/shoppingListDB')
 
 app.get("/", (req, res) => {
 	day = today.toLocaleString("eng", options)
