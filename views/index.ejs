@@ -11,13 +11,16 @@
             <ul>
                 <% if (itemEls) { %>
                     <% itemEls.map(item=> { %>
+                        <form action="/delete" method="post">
+                            <li class="item">
+                                <input type="checkbox" value="<%= item._id %>" name="checkbox"
+                                    onchange="this.form.submit()">
+                                <p>
+                                    <%= item.itemName %>
+                                </p>
+                            </li>
 
-                        <li class="item">
-                            <input type="checkbox" name="" id="">
-                            <p>
-                                <%= item.itemName %>
-                            </p>
-                        </li>
+                        </form>
 
                         <% }) %>
                             <% } %>

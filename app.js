@@ -33,8 +33,8 @@ app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"))
 
-mongoose.connect(`mongodb+srv://${adminName}:${adminPassword}@cluster0.axfb9st.mongodb.net/?retryWrites=true&w=majority/shoppingListDB`)
-
+mongoose.connect(`mongodb+srv://${adminName}:${adminPassword}@cluster0.axfb9st.mongodb.net/shoppingListDB`)
+// mongoose.connect(`mongodb+srv://${adminName}:${adminPassword}@cluster0.axfb9st.mongodb.net/?retryWrites=true&w=majority/shoppingListDB`)
 
 const itemSchema = {
 	itemName: String
@@ -55,7 +55,7 @@ const item3 = new Item({
 	itemName: '<----Hit this to delete an item'
 })
 
-const defaultItems = [item, item2, item3]
+let defaultItems = [item, item2, item3]
 
 
 
@@ -79,14 +79,25 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-	const newItem = [req.body.newItemInput]
-	if (req.body.list === "Food") {
-		foodItems = [...foodItems, newItem]
-		res.redirect("/food")
-	} else {
-		itemsArr = [...itemsArr, newItem]
-		res.redirect("/")
-	}
+
+	const itemTitle = req.body.newItemInput
+
+	const itemEl = new Item({
+		itemName: itemTitle
+	}).save()
+
+	res.redirect('/')
+})
+
+app.post('/delete', (req, res) => {
+	const checkedItemID = req.body.checkbox
+	Item.findByIdAndRemove(checkedItemID)
+		.then(
+			console.log('Item has been deleted successfully'))
+		.catch((err) => {
+			console.log(err);
+		})
+	res.redirect('/')
 })
 
 app.get("/food", (req, res) => {
